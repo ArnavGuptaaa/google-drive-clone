@@ -26,6 +26,7 @@ const Register = () => {
 	const history = useHistory();
 
 	const validateCreds = (e) => {
+		e.preventDefault();
 		// email regex
 		const emailRegex =
 			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -35,6 +36,8 @@ const Register = () => {
 
 		const nameRegex = /^[a-z ,.'-]+$/i;
 
+		console.log("checking vlaid ");
+
 		if (
 			emailRegex.test(email) &&
 			passwordRegex.test(password) &&
@@ -42,20 +45,25 @@ const Register = () => {
 		) {
 			setIsValidated(true);
 			postRegister(e, email, password);
-			e.preventDefault();
+			console.log("valid");
 		} else {
+			console.log("non valid");
 			setIsValidated(false);
 		}
 		setIsclicked(true);
 	};
 
 	const postRegister = (e) => {
+		e.preventDefault();
 		const data = {
 			username: email,
 			password: password,
 		};
+		console.log("Fetching");
 		fetch('http://localhost:5000/register', {
 			method: 'POST',
+			withCredentials: true,
+			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
