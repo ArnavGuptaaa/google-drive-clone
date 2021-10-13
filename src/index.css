@@ -269,3 +269,30 @@ html::-webkit-scrollbar-thumb {
 	font-size: 2rem;
 	font-weight: 900;
 }
+
+.upload-modal {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	font-size: 1.2rem;
+}
+.metaData {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: left;
+	margin: 10px 0;
+	width: 100%;
+	height: 200px;
+	border: 1px solid #5e636e;
+	padding: 5px;
+}
+
+.not-uploaded {
+	border: 1px dashed #5e636e;
+}
+.upload-button {
+	text-align: center;
+}
