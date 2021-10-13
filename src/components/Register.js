@@ -36,7 +36,7 @@ const Register = () => {
 
 		const nameRegex = /^[a-z ,.'-]+$/i;
 
-		console.log("checking vlaid ");
+		console.log('checking vlaid ');
 
 		if (
 			emailRegex.test(email) &&
@@ -45,9 +45,9 @@ const Register = () => {
 		) {
 			setIsValidated(true);
 			postRegister(e, email, password);
-			console.log("valid");
+			console.log('valid');
 		} else {
-			console.log("non valid");
+			console.log('non valid');
 			setIsValidated(false);
 		}
 		setIsclicked(true);
@@ -56,10 +56,11 @@ const Register = () => {
 	const postRegister = (e) => {
 		e.preventDefault();
 		const data = {
-			username: email,
+			username: name,
+			email: email,
 			password: password,
 		};
-		console.log("Fetching");
+		console.log('Fetching');
 		fetch('http://localhost:5000/register', {
 			method: 'POST',
 			withCredentials: true,
@@ -72,7 +73,7 @@ const Register = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data);
-				if (data.status == 'success') {
+				if (data.success) {
 					setIsValidated(true);
 					history.push('/login');
 				} else {

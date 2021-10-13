@@ -18,7 +18,7 @@ const Login = () => {
 	const classes = useStyles();
 
 	// Form validation
-	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [isValidated, setIsValidated] = useState(false);
 	const [isClicked, setIsclicked] = useState(false);
@@ -27,31 +27,31 @@ const Login = () => {
 	const validateCreds = (e) => {
 		e.preventDefault();
 
-		// email regex
-		const emailRegex =
-			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		// password regex
+		// username regex
+		const nameRegex = /^[a-z ,.'-]+$/i;
+
+		// Password Regex
 		const passwordRegex =
 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-		if (emailRegex.test(email) && passwordRegex.test(password)) {
+		if (nameRegex.test(name) && passwordRegex.test(password)) {
 			setIsValidated(true);
 			// Posting to the API
 			e.preventDefault();
-			postLogin(email, password);
+			postLogin(name, password);
 		} else {
 			setIsValidated(false);
 		}
 		setIsclicked(true);
 
-		console.log(email, password);
+		console.log(name, password);
 		console.log(isValidated);
 	};
 
 	// POST REQUEST
-	const postLogin = (email, password) => {
+	const postLogin = (name, password) => {
 		const data = {
-			username: email,
+			username: name,
 			password: password,
 		};
 		fetch('http://localhost:5000/login', {
@@ -66,7 +66,7 @@ const Login = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data);
-				if (data.status == 'success') {
+				if (data.success) {
 					history.push('/');
 				} else {
 					setIsValidated(false);
@@ -89,10 +89,10 @@ const Login = () => {
 				</div>
 				<TextField
 					id="outlined-full-width login-email"
-					label="Email"
+					label="Username"
 					style={{ margin: 8 }}
 					{...(!isValidated && isClicked ? { error: 'true' } : {})}
-					placeholder="Email"
+					placeholder="Username"
 					fullWidth
 					margin="normal"
 					InputLabelProps={{
@@ -101,8 +101,8 @@ const Login = () => {
 					autoComplete="off"
 					variant="outlined"
 					onChange={(e) => {
-						setEmail(e.target.value);
-						console.log(email);
+						setName(e.target.value);
+						console.log(name);
 					}}
 				/>
 				<TextField
