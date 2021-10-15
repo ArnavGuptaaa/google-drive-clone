@@ -36,16 +36,17 @@ const Login = () => {
 
 		if (nameRegex.test(name) && passwordRegex.test(password)) {
 			setIsValidated(true);
+			console.log('setIsValidated Is Now ' + isValidated);
 			// Posting to the API
 			e.preventDefault();
 			postLogin(name, password);
+			console.log('After ' + isValidated);
 		} else {
 			setIsValidated(false);
 		}
 		setIsclicked(true);
 
 		console.log(name, password);
-		console.log(isValidated);
 	};
 
 	// POST REQUEST
@@ -67,6 +68,7 @@ const Login = () => {
 			.then((data) => {
 				console.log(data);
 				if (data.success) {
+					console.log('redirect to dashboard');
 					history.push('/');
 				} else {
 					setIsValidated(false);
@@ -126,13 +128,6 @@ const Login = () => {
 				/>
 
 				<div className="links-div">
-					<a
-						href="https://duckduckgo.com/"
-						className="forgot-password"
-						target="_blank"
-					>
-						Forgot Password?
-					</a>
 					<a href="/register" className="forgot-password">
 						Dont have an Account? Register Now.
 					</a>

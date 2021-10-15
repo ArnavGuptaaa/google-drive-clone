@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 
-function Header() {
+function Header({ userName, setIsLoggedIn }) {
 	const useStyles = makeStyles((theme) => ({
 		margin: {
 			margin: 10,
@@ -16,7 +16,7 @@ function Header() {
 
 	const handleLogout = () => {
 		// Logout Post Request
-		fetch('http://localhost:5000/login', {
+		fetch('http://localhost:5000/logout', {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',
@@ -27,10 +27,9 @@ function Header() {
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data);
-				if (data.sucess) {
+
+				if (data.success) {
 					history.push('/login');
-				} else {
-					console.log('Hello');
 				}
 			})
 			.catch((err) => console.log(err));
@@ -54,11 +53,11 @@ function Header() {
 					size="small"
 					color="primary"
 					className={classes.margin}
-					// onClick={validateCreds}
+					onClick={handleLogout}
 				>
 					Logout
 				</Button>
-				<Avatar className={classes.avatar}>SA</Avatar>
+				<Avatar className={classes.avatar}>{userName[0]}</Avatar>
 			</div>
 		</div>
 	);

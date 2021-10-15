@@ -38,7 +38,6 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 			fontSize: '40px',
 		},
 	});
-
 	const classes = useStyles();
 
 	// Functions
@@ -49,8 +48,44 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 	const handleClick = (option) => {
 		setSideBarOption(option);
 	};
+
+	const uploadFile = (url) => {
+		fetch(url, {
+			method: 'PUT',
+			headers: {
+				'x-ms-blob-type': 'BlockBlob',
+			},
+			// body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	const handleUpload = () => {
-		console.log('Upload Was Clicked');
+		const data = {
+			fileName: metaData.fileName,
+		};
+
+		fetch('http://localhost:5000/getSASUrl', {
+			method: 'POST',
+			withCredentials: true,
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+				if (data.success) {
+					uploadFile(data.url);
+				}
+			})
+			.catch((err) => console.log(err));
 	};
 
 	return (

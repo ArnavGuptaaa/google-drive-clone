@@ -4,10 +4,6 @@ import DevCard from './DevCard';
 import { DevTeam } from './DevTeam';
 
 const Main = ({ sideBarOption }) => {
-	useEffect(() => {
-		document.title = 'Drive Clone';
-	}, []);
-
 	const [metaData, setMetaData] = useState({
 		fileName: 'FILE 1',
 		createDate: '2020-01-01',
