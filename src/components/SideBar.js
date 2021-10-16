@@ -2,13 +2,11 @@ import { makeStyles } from '@material-ui/styles';
 import GroupIcon from '@material-ui/icons/Group';
 import ComputerIcon from '@material-ui/icons/Computer';
 import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { TextField } from '@material-ui/core';
+
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -27,6 +25,7 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 	const [open, setOpen] = useState(false);
 	const [isFileUploaded, setIsFileUploaded] = useState(false);
 	const [metaData, setMetaData] = useState({});
+	const [file, setFile] = useState();
 
 	// Button Styles
 	const useStyles = makeStyles({
@@ -48,26 +47,61 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 	const handleClick = (option) => {
 		setSideBarOption(option);
 	};
-
-	const uploadFile = (url) => {
-		fetch(url, {
-			method: 'PUT',
-			headers: {
-				'x-ms-blob-type': 'BlockBlob',
+	const uploadMetaData = () => {
+		const data = {
+			metadata: {
+				filename: metaData.fileName,
+				createdate: metaData.createDate,
+				lastmodified: metaData.lastModified,
+				filesize: metaData.fileSize.toString(),
+				type: metaData.type,
 			},
-			// body: JSON.stringify(data),
+		};
+		console.log('metadata starts');
+		fetch('http://localhost:5000/setMetaData', {
+			method: 'POST',
+			withCredentials: true,
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
+				if (data.success) {
+					console.log('metadata here');
+					console.log('status ' + data.success);
+				}
 			})
 			.catch((err) => console.log(err));
 	};
 
-	const handleUpload = () => {
+	const uploadFile = (url) => {
+		console.log(metaData.type);
+		console.log('put : ' + metaData.fileName);
+		fetch(url, {
+			method: 'PUT',
+			headers: {
+				'x-ms-blob-type': 'BlockBlob',
+				'Content-Type': metaData.type,
+				redirect: 'follow',
+			},
+			body: file,
+		})
+			.then((res) => {
+				console.log('PUT url is : ' + url);
+				uploadMetaData(metaData);
+			})
+			.catch((err) => console.log(err));
+	};
+
+	const handleUpload = (e) => {
 		const data = {
 			fileName: metaData.fileName,
 		};
+
+		console.log('post : ' + metaData.fileName);
 
 		fetch('http://localhost:5000/getSASUrl', {
 			method: 'POST',
@@ -80,12 +114,16 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
+				console.log('Yay!', data);
 				if (data.success) {
+					console.log('url is : ' + data.url);
 					uploadFile(data.url);
 				}
 			})
 			.catch((err) => console.log(err));
+
+		e.target.files = {};
+		handleClose();
 	};
 
 	return (
@@ -107,6 +145,7 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 							<p>Created : {metaData.createDate}</p>
 							<p>Last modified : {metaData.lastModified}</p>
 							<p>size : {metaData.fileSize} MB</p>
+							{}
 						</div>
 					) : (
 						<div className="metaData not-uploaded">
@@ -119,7 +158,9 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 							className="upload-button"
 							variant="contained"
 							component="label"
-							onClick={handleUpload}
+							onClick={(e) => {
+								handleUpload(e);
+							}}
 						>
 							Upload
 						</Button>
@@ -129,8 +170,6 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 							<input
 								type="file"
 								onChange={(e) => {
-									setIsFileUploaded(true);
-
 									setMetaData({
 										fileName: e.target.files[0].name,
 										createDate: new Date(
@@ -140,7 +179,11 @@ const SideBar = ({ sideBarOption, setSideBarOption }) => {
 											e.target.files[0].lastModified
 										).toDateString(),
 										fileSize: e.target.files[0].size * Math.pow(10, -6),
+										type: e.target.files[0].type,
 									});
+
+									setFile(e.target.files[0]);
+									setIsFileUploaded(true);
 								}}
 								hidden
 							/>

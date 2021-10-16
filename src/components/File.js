@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import { TextField } from '@material-ui/core';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
@@ -10,7 +9,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import CheckIcon from '@mui/icons-material/Check';
 
 const style = {
 	position: 'absolute',
@@ -32,15 +30,15 @@ const Main = ({ metaData }) => {
 		<div className="file">
 			<div className="file-header">
 				<InsertDriveFileIcon />
-				<p className="file-name">{metaData.fileName}</p>
+				<p className="file-name">{metaData.filename}</p>
 				<IconButton>
 					<DownloadIcon />
 				</IconButton>
 			</div>
 			<div className="file-info">
-				Created: {metaData.createDate} <br />
-				Last Modified: {metaData.lastModified} <br />
-				File Size: {metaData.fileSize} <br />
+				Created: {metaData.createdate} <br />
+				Last Modified: {metaData.lastmodified} <br />
+				File Size: {metaData.filesize} <br />
 				<br />
 			</div>
 
@@ -71,7 +69,7 @@ const Main = ({ metaData }) => {
 							InputLabelProps={{
 								shrink: true,
 							}}
-							defaultValue={metaData.fileName}
+							defaultValue={metaData.filename}
 						/>
 					</Typography>
 
