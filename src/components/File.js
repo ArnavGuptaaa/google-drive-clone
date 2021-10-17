@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+const storage = require('@azure/storage-blob');
 
 const style = {
 	position: 'absolute',
@@ -22,8 +23,7 @@ const style = {
 	p: 4,
 };
 
-
-const Main = ({ metaData, reRender,  setReRender }) => {
+const Main = ({ metaData, reRender, setReRender }) => {
 	const [open, setOpen] = useState(false);
 	const [newFileName, setNewFileName] = useState(metaData.filename);
 	const [blobFile, setBlobFile] = useState();
@@ -34,7 +34,7 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 	const handleDelete = () => {
 		console.log(metaData.filename);
 		const data = {
-			filename: metaData.filename
+			filename: metaData.filename,
 		};
 		console.log('metadata starts');
 		fetch('http://localhost:5000/deleteBlob', {
@@ -49,16 +49,15 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data);
-				
+
 				if (data.success) {
 					reRender ? setReRender(0) : setReRender(1);
 					console.log('delete status ' + data.success);
 				}
 			})
 			.catch((err) => console.log(err));
-	}
+	};
 	const handleRename = () => {
-		
 		const data = {
 			filename: metaData.filename,
 			metadata: {
@@ -81,17 +80,15 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data);
-				
+
 				if (data.success) {
 					handleClose();
 					reRender ? setReRender(0) : setReRender(1);
-					
 				}
 			})
 			.catch((err) => console.log(err));
-	}
-	
-	const getFile = (url) =>{
+	};
+	const getFile = (url) => {
 		console.log('getFile starts');
 		fetch(url, {
 			method: 'GET',
@@ -99,47 +96,50 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 				'x-ms-blob-type': 'BlockBlob',
 				'Content-Type': metaData.type,
 				redirect: 'follow',
-			}
-			
-		}).then((res) => res.blob())	
-		  .then((data)=>{
-			  console.log(data);
-				console.log(metaData.type)
-				setBlobFile(new Blob([data.body], {
-					type: metaData.type
-				}));
+			},
+		})
+			.then((res) => {
+				console.log(res);
+				res.blob();
+			})
+			.then((data) => {
+				console.log(data);
+				console.log(metaData.type);
+
+				// setBlobFile(new Blob([data.body], {
+				// 	type: metaData.type
+				// }));
 
 				// setBlobFile(new File([blob], metaData.filename, {
-  				// 	type: metaData.type,
+				// 	type: metaData.type,
 				// }))
 				console.log('after blob file creation');
-				console.log(blobFile);
 			})
-			.then(()=>{
+			.then(() => {
 				// trigger download
-				const a = document.createElement("a");
-				a.style.display = "none";
+				const a = document.createElement('a');
+				a.style.display = 'none';
 				document.body.appendChild(a);
 
-				a.href = URL.createObjectURL(blobFile);
-				console.log('a.href');
+				// a.href = URL.createObjectURL(blobFile);
+				console.log(url);
+				a.href = url;
 
 				// Use download attribute to set set desired file name
-				a.setAttribute("download", metaData.filename);
+				a.setAttribute('download', metaData.filename);
 
 				// Trigger the download by simulating click
-				a.click();
-				console.log('a clicked');
+				// // a.click();
+				// console.log('a clicked');
 
 				// Cleanup
-				window.URL.revokeObjectURL(a.href);
+				// window.URL.revokeObjectURL(a.href);
 				document.body.removeChild(a);
 			})
-			.catch((err) => console.log(err));	
-	}
+			.catch((err) => console.log(err));
+	};
 
 	const handleDownload = () => {
-
 		const data = {
 			filename: metaData.filename,
 		};
@@ -158,28 +158,31 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 				console.log('Yay!', data);
 				if (data.success) {
 					console.log('url is : ' + data.url);
-					getFile(data.url);
+					const blob = new storage.BlobClient(data.url);
+					blob.download().then((data) => {
+						console.log(data);
+					});
+					// getFile(data.url);
 				}
 			})
 			.catch((err) => console.log(err));
-	}
+	};
 	return (
 		<div className="file">
 			<div className="file-header">
 				<InsertDriveFileIcon />
 				<p className="file-name">{metaData.filename}</p>
 				{/* <a href="https://ratneshjain.blob.core.windows.net/arnav/Sumedh.png?sv=2020-10-02&st=2021-10-17T10%3A08%3A24Z&se=2021-10-17T11%3A13%3A24Z&sr=b&sp=rcw&sig=u0rtC6dSy9Obytm%2BVC03YqaWTAjnJiqL8SxGmxYv8s8%3D" download> */}
-					<IconButton onClick={handleDownload} >
-						<DownloadIcon />
-					</IconButton>
+				<IconButton onClick={handleDownload}>
+					<DownloadIcon />
+				</IconButton>
 				{/* </a> */}
-
-
 			</div>
 			<div className="file-info">
 				Created: {metaData.createdate} <br />
 				Last Modified: {metaData.lastmodified} <br />
-				File Size: {metaData.filesize} MB<br />
+				File Size: {metaData.filesize} MB
+				<br />
 				<br />
 			</div>
 
@@ -211,14 +214,18 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 								shrink: true,
 							}}
 							defaultValue={metaData.filename}
-							onChange={(e)=>{
-								setNewFileName(e.target.value)
+							onChange={(e) => {
+								setNewFileName(e.target.value);
 							}}
 						/>
 					</Typography>
 
 					{/* SAVE / EDIT / UPDATE REQUEST */}
-					<Button style={{ margin: 8 }} variant="contained" onClick={handleRename}>
+					<Button
+						style={{ margin: 8 }}
+						variant="contained"
+						onClick={handleRename}
+					>
 						Save
 					</Button>
 				</Box>

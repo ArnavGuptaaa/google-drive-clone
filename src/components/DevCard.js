@@ -2,10 +2,10 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import IconButton from '@mui/material/IconButton';
 
-const DevCard = ({ team, key }) => {
+const DevCard = ({ team }) => {
 	return (
 		<div className="card">
-			<img src={team.imgUrl} alt={`Dev ${key}`} />
+			<img src={team.imgUrl} alt={`Dev`} />
 			<h3>{team.name}</h3>
 
 			<div className="card-links">
