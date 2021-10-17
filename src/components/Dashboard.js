@@ -8,6 +8,8 @@ const Dashboard = () => {
 	const [userName, setUserName] = useState('');
 	const [sideBarOption, setSideBarOption] = useState(0);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [reRender, setReRender] = useState(0);
+
 	const history = useHistory();
 
 	useEffect(() => {
@@ -43,9 +45,9 @@ const Dashboard = () => {
 				<Header userName={userName} setIsLoggedIn={setIsLoggedIn} />
 				<div className="main-flex">
 					{/* Side Bar */}
-					<SideBar setSideBarOption={setSideBarOption} />
+					<SideBar setSideBarOption={setSideBarOption} reRender={reRender} setReRender={setReRender}/>
 					{/* Main */}
-					<Main sideBarOption={sideBarOption} />
+					<Main sideBarOption={sideBarOption} reRender={reRender} setReRender={setReRender}/>
 				</div>
 			</div>
 		);
