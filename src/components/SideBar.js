@@ -106,7 +106,7 @@ const SideBar = ({ sideBarOption, setSideBarOption, reRender, setReRender }) => 
 
 	const handleUpload = (e) => {
 		const data = {
-			fileName: metaData.fileName,
+			filename: metaData.fileName,
 		};
 
 		console.log('post : ' + metaData.fileName);

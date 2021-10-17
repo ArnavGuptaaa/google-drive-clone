@@ -25,9 +25,11 @@ const style = {
 
 const Main = ({ metaData, reRender,  setReRender }) => {
 	const [open, setOpen] = useState(false);
+	const [newFileName, setNewFileName] = useState(metaData.filename);
+	const [blobFile, setBlobFile] = useState();
+
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-	const [newFileName, setNewFileName] = useState(metaData.filename)
 
 	const handleDelete = () => {
 		console.log(metaData.filename);
@@ -87,22 +89,97 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 				}
 			})
 			.catch((err) => console.log(err));
+	}
+	
+	const getFile = (url) =>{
+		console.log('getFile starts');
+		fetch(url, {
+			method: 'GET',
+			headers: {
+				'x-ms-blob-type': 'BlockBlob',
+				'Content-Type': metaData.type,
+				redirect: 'follow',
+			}
+			
+		}).then((res) => res.blob())	
+		  .then((data)=>{
+			  console.log(data);
+				console.log(metaData.type)
+				setBlobFile(new Blob([data.body], {
+					type: metaData.type
+				}));
 
-		
+				// setBlobFile(new File([blob], metaData.filename, {
+  				// 	type: metaData.type,
+				// }))
+				console.log('after blob file creation');
+				console.log(blobFile);
+			})
+			.then(()=>{
+				// trigger download
+				const a = document.createElement("a");
+				a.style.display = "none";
+				document.body.appendChild(a);
+
+				a.href = URL.createObjectURL(blobFile);
+				console.log('a.href');
+
+				// Use download attribute to set set desired file name
+				a.setAttribute("download", metaData.filename);
+
+				// Trigger the download by simulating click
+				a.click();
+				console.log('a clicked');
+
+				// Cleanup
+				window.URL.revokeObjectURL(a.href);
+				document.body.removeChild(a);
+			})
+			.catch((err) => console.log(err));	
+	}
+
+	const handleDownload = () => {
+
+		const data = {
+			filename: metaData.filename,
+		};
+
+		fetch('http://localhost:5000/getSASUrl', {
+			method: 'POST',
+			withCredentials: true,
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log('Yay!', data);
+				if (data.success) {
+					console.log('url is : ' + data.url);
+					getFile(data.url);
+				}
+			})
+			.catch((err) => console.log(err));
 	}
 	return (
 		<div className="file">
 			<div className="file-header">
 				<InsertDriveFileIcon />
 				<p className="file-name">{metaData.filename}</p>
-				<IconButton>
-					<DownloadIcon />
-				</IconButton>
+				{/* <a href="https://ratneshjain.blob.core.windows.net/arnav/Sumedh.png?sv=2020-10-02&st=2021-10-17T10%3A08%3A24Z&se=2021-10-17T11%3A13%3A24Z&sr=b&sp=rcw&sig=u0rtC6dSy9Obytm%2BVC03YqaWTAjnJiqL8SxGmxYv8s8%3D" download> */}
+					<IconButton onClick={handleDownload} >
+						<DownloadIcon />
+					</IconButton>
+				{/* </a> */}
+
+
 			</div>
 			<div className="file-info">
 				Created: {metaData.createdate} <br />
 				Last Modified: {metaData.lastmodified} <br />
-				File Size: {metaData.filesize} <br />
+				File Size: {metaData.filesize} MB<br />
 				<br />
 			</div>
 
@@ -110,8 +187,8 @@ const Main = ({ metaData, reRender,  setReRender }) => {
 				<IconButton onClick={handleDelete}>
 					<DeleteIcon />
 				</IconButton>
-				<IconButton>
-					<CreateIcon onClick={handleOpen}/>
+				<IconButton onClick={handleOpen}>
+					<CreateIcon />
 				</IconButton>
 			</div>
 			<Modal
