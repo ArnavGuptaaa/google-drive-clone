@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-const storage = require('@azure/storage-blob');
 
 const style = {
 	position: 'absolute',
@@ -158,10 +157,25 @@ const Main = ({ metaData, reRender, setReRender }) => {
 				console.log('Yay!', data);
 				if (data.success) {
 					console.log('url is : ' + data.url);
-					const blob = new storage.BlobClient(data.url);
-					blob.download().then((data) => {
-						console.log(data);
-					});
+
+					const a = document.createElement('a');
+					a.style.display = 'none';
+					document.body.appendChild(a);
+
+					// a.href = URL.createObjectURL(blobFile);
+					a.href = data.url;
+
+					// Use download attribute to set set desired file name
+					a.setAttribute('download', metaData.filename);
+
+					// Trigger the download by simulating click
+					a.click();
+					console.log('a clicked');
+
+					// Cleanup
+					// window.URL.revokeObjectURL(a.href);
+					document.body.removeChild(a);
+
 					// getFile(data.url);
 				}
 			})
