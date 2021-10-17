@@ -36,7 +36,7 @@ const Dashboard = () => {
 				}
 			})
 			.catch((err) => console.log(err));
-	}, []);
+	}, [history]);
 
 	if (isLoggedIn)
 		return (
@@ -45,9 +45,17 @@ const Dashboard = () => {
 				<Header userName={userName} setIsLoggedIn={setIsLoggedIn} />
 				<div className="main-flex">
 					{/* Side Bar */}
-					<SideBar setSideBarOption={setSideBarOption} reRender={reRender} setReRender={setReRender}/>
+					<SideBar
+						setSideBarOption={setSideBarOption}
+						reRender={reRender}
+						setReRender={setReRender}
+					/>
 					{/* Main */}
-					<Main sideBarOption={sideBarOption} reRender={reRender} setReRender={setReRender}/>
+					<Main
+						sideBarOption={sideBarOption}
+						reRender={reRender}
+						setReRender={setReRender}
+					/>
 				</div>
 			</div>
 		);

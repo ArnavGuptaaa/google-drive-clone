@@ -3,7 +3,6 @@ import GroupIcon from '@material-ui/icons/Group';
 import ComputerIcon from '@material-ui/icons/Computer';
 import AddIcon from '@material-ui/icons/Add';
 import { useState } from 'react';
-import {useHistory} from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -20,15 +19,18 @@ const style = {
 	p: 4,
 };
 
-const SideBar = ({ sideBarOption, setSideBarOption, reRender, setReRender }) => {
+const SideBar = ({
+	sideBarOption,
+	setSideBarOption,
+	reRender,
+	setReRender,
+}) => {
 	const [listActive1, setListActive1] = useState('list-item-active');
 	const [listActive2, setListActive2] = useState('');
 	const [open, setOpen] = useState(false);
 	const [isFileUploaded, setIsFileUploaded] = useState(false);
 	const [metaData, setMetaData] = useState({});
 	const [file, setFile] = useState();
-
-	const history = useHistory();
 	// Button Styles
 	const useStyles = makeStyles({
 		btn: {
@@ -99,9 +101,8 @@ const SideBar = ({ sideBarOption, setSideBarOption, reRender, setReRender }) => 
 			.then((res) => {
 				console.log('PUT url is : ' + url);
 				uploadMetaData(metaData);
-				
 			})
-			.catch((err) => console.log(err));		
+			.catch((err) => console.log(err));
 	};
 
 	const handleUpload = (e) => {

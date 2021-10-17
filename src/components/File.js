@@ -25,7 +25,6 @@ const style = {
 const Main = ({ metaData, reRender, setReRender }) => {
 	const [open, setOpen] = useState(false);
 	const [newFileName, setNewFileName] = useState(metaData.filename);
-	const [blobFile, setBlobFile] = useState();
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -87,56 +86,57 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			})
 			.catch((err) => console.log(err));
 	};
-	const getFile = (url) => {
-		console.log('getFile starts');
-		fetch(url, {
-			method: 'GET',
-			headers: {
-				'x-ms-blob-type': 'BlockBlob',
-				'Content-Type': metaData.type,
-				redirect: 'follow',
-			},
-		})
-			.then((res) => {
-				console.log(res);
-				res.blob();
-			})
-			.then((data) => {
-				console.log(data);
-				console.log(metaData.type);
 
-				// setBlobFile(new Blob([data.body], {
-				// 	type: metaData.type
-				// }));
+	// const getFile = (url) => {
+	// 	console.log('getFile starts');
+	// 	fetch(url, {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			'x-ms-blob-type': 'BlockBlob',
+	// 			'Content-Type': metaData.type,
+	// 			redirect: 'follow',
+	// 		},
+	// 	})
+	// 		.then((res) => {
+	// 			console.log(res);
+	// 			res.blob();
+	// 		})
+	// 		.then((data) => {
+	// 			console.log(data);
+	// 			console.log(metaData.type);
 
-				// setBlobFile(new File([blob], metaData.filename, {
-				// 	type: metaData.type,
-				// }))
-				console.log('after blob file creation');
-			})
-			.then(() => {
-				// trigger download
-				const a = document.createElement('a');
-				a.style.display = 'none';
-				document.body.appendChild(a);
+	// 			// setBlobFile(new Blob([data.body], {
+	// 			// 	type: metaData.type
+	// 			// }));
 
-				// a.href = URL.createObjectURL(blobFile);
-				console.log(url);
-				a.href = url;
+	// 			// setBlobFile(new File([blob], metaData.filename, {
+	// 			// 	type: metaData.type,
+	// 			// }))
+	// 			console.log('after blob file creation');
+	// 		})
+	// 		.then(() => {
+	// 			// trigger download
+	// 			const a = document.createElement('a');
+	// 			a.style.display = 'none';
+	// 			document.body.appendChild(a);
 
-				// Use download attribute to set set desired file name
-				a.setAttribute('download', metaData.filename);
+	// 			// a.href = URL.createObjectURL(blobFile);
+	// 			console.log(url);
+	// 			a.href = url;
 
-				// Trigger the download by simulating click
-				// // a.click();
-				// console.log('a clicked');
+	// 			// Use download attribute to set set desired file name
+	// 			a.setAttribute('download', metaData.filename);
 
-				// Cleanup
-				// window.URL.revokeObjectURL(a.href);
-				document.body.removeChild(a);
-			})
-			.catch((err) => console.log(err));
-	};
+	// 			// Trigger the download by simulating click
+	// 			// // a.click();
+	// 			// console.log('a clicked');
+
+	// 			// Cleanup
+	// 			// window.URL.revokeObjectURL(a.href);
+	// 			document.body.removeChild(a);
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// };
 
 	const handleDownload = () => {
 		const data = {
@@ -173,7 +173,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 					console.log('a clicked');
 
 					// Cleanup
-					// window.URL.revokeObjectURL(a.href);
+					window.URL.revokeObjectURL(a.href);
 					document.body.removeChild(a);
 
 					// getFile(data.url);
