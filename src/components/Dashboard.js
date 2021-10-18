@@ -5,16 +5,12 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 const Dashboard = () => {
-	const [userName, setUserName] = useState('');
-	const [sideBarOption, setSideBarOption] = useState(0);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [reRender, setReRender] = useState(0);
-
+	// USE HSTORY
 	const history = useHistory();
 
+	// API GET Request for is-logged
 	useEffect(() => {
 		document.title = 'Drive Clone';
-		console.log('useEffect Ran');
 
 		// get request with fetch
 		fetch('http://localhost:5000/is-logged', {
@@ -37,6 +33,12 @@ const Dashboard = () => {
 			})
 			.catch((err) => console.log(err));
 	}, [history]);
+
+	// State Variables
+	const [userName, setUserName] = useState('');
+	const [sideBarOption, setSideBarOption] = useState(0);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [reRender, setReRender] = useState(0);
 
 	if (isLoggedIn)
 		return (

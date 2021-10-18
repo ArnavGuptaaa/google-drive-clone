@@ -5,38 +5,37 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 const Register = () => {
+	// useeffect
 	useEffect(() => {
 		document.title = 'Register - Drive Clone';
 	}, []);
 
-	const useStyles = makeStyles((theme) => ({
-		margin: {
-			margin: theme.spacing(1),
-		},
-	}));
-
-	const classes = useStyles();
-
-	// Form validation
+	// State Variables
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [isValidated, setIsValidated] = useState(false);
 	const [isClicked, setIsclicked] = useState(false);
+
+	// functions
+	const useStyles = makeStyles((theme) => ({
+		margin: {
+			margin: theme.spacing(1),
+		},
+	}));
+	const classes = useStyles();
 	const history = useHistory();
 
 	const validateCreds = (e) => {
 		e.preventDefault();
 		// email regex
 		const emailRegex =
-			'/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/';
+			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		// password regex
 		const passwordRegex =
-			'/^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/';
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 		const nameRegex = /^[a-z ,.'-]+$/i;
-
-		console.log('checking vlaid ');
 
 		if (
 			emailRegex.test(email) &&
@@ -45,9 +44,7 @@ const Register = () => {
 		) {
 			setIsValidated(true);
 			postRegister(e, email, password);
-			console.log('valid');
 		} else {
-			console.log('non valid');
 			setIsValidated(false);
 		}
 		setIsclicked(true);
@@ -60,7 +57,6 @@ const Register = () => {
 			email: email,
 			password: password,
 		};
-		console.log('Fetching');
 		fetch('http://localhost:5000/register', {
 			method: 'POST',
 			withCredentials: true,
@@ -72,7 +68,6 @@ const Register = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
 				if (data.success) {
 					setIsValidated(true);
 					history.push('/login');
@@ -97,7 +92,7 @@ const Register = () => {
 					id="outlined-full-width"
 					label="Name"
 					style={{ margin: 8 }}
-					{...(!isValidated && isClicked ? { error: 'true' } : {})}
+					{...(!isValidated && isClicked ? { error: true } : {})}
 					placeholder="Name"
 					fullWidth
 					margin="normal"
@@ -114,7 +109,7 @@ const Register = () => {
 					id="outlined-full-width"
 					label="Email"
 					style={{ margin: 8 }}
-					{...(!isValidated && isClicked ? { error: 'true' } : {})}
+					{...(!isValidated && isClicked ? { error: true } : {})}
 					placeholder="Email"
 					fullWidth
 					margin="normal"
@@ -132,7 +127,7 @@ const Register = () => {
 					type="password"
 					label="Password"
 					style={{ margin: 8 }}
-					{...(!isValidated && isClicked ? { error: 'true' } : {})}
+					{...(!isValidated && isClicked ? { error: true } : {})}
 					placeholder="Password"
 					fullWidth
 					margin="normal"

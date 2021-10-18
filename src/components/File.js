@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { TextField } from '@material-ui/core';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -29,12 +30,12 @@ const Main = ({ metaData, reRender, setReRender }) => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
+	// HANDLE DELETE
 	const handleDelete = () => {
-		console.log(metaData.filename);
 		const data = {
 			filename: metaData.filename,
 		};
-		console.log('metadata starts');
+
 		fetch('http://localhost:5000/deleteBlob', {
 			method: 'POST',
 			withCredentials: true,
@@ -46,15 +47,14 @@ const Main = ({ metaData, reRender, setReRender }) => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
-
 				if (data.success) {
 					reRender ? setReRender(0) : setReRender(1);
-					console.log('delete status ' + data.success);
 				}
 			})
 			.catch((err) => console.log(err));
 	};
+
+	// HANDLE RENAME
 	const handleRename = () => {
 		const data = {
 			filename: metaData.filename,
@@ -77,8 +77,6 @@ const Main = ({ metaData, reRender, setReRender }) => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
-
 				if (data.success) {
 					handleClose();
 					reRender ? setReRender(0) : setReRender(1);
@@ -87,57 +85,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			.catch((err) => console.log(err));
 	};
 
-	// const getFile = (url) => {
-	// 	console.log('getFile starts');
-	// 	fetch(url, {
-	// 		method: 'GET',
-	// 		headers: {
-	// 			'x-ms-blob-type': 'BlockBlob',
-	// 			'Content-Type': metaData.type,
-	// 			redirect: 'follow',
-	// 		},
-	// 	})
-	// 		.then((res) => {
-	// 			console.log(res);
-	// 			res.blob();
-	// 		})
-	// 		.then((data) => {
-	// 			console.log(data);
-	// 			console.log(metaData.type);
-
-	// 			// setBlobFile(new Blob([data.body], {
-	// 			// 	type: metaData.type
-	// 			// }));
-
-	// 			// setBlobFile(new File([blob], metaData.filename, {
-	// 			// 	type: metaData.type,
-	// 			// }))
-	// 			console.log('after blob file creation');
-	// 		})
-	// 		.then(() => {
-	// 			// trigger download
-	// 			const a = document.createElement('a');
-	// 			a.style.display = 'none';
-	// 			document.body.appendChild(a);
-
-	// 			// a.href = URL.createObjectURL(blobFile);
-	// 			console.log(url);
-	// 			a.href = url;
-
-	// 			// Use download attribute to set set desired file name
-	// 			a.setAttribute('download', metaData.filename);
-
-	// 			// Trigger the download by simulating click
-	// 			// // a.click();
-	// 			// console.log('a clicked');
-
-	// 			// Cleanup
-	// 			// window.URL.revokeObjectURL(a.href);
-	// 			document.body.removeChild(a);
-	// 		})
-	// 		.catch((err) => console.log(err));
-	// };
-
+	// HANDLE DOWNLOAD
 	const handleDownload = () => {
 		const data = {
 			filename: metaData.filename,
@@ -154,10 +102,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log('Yay!', data);
 				if (data.success) {
-					console.log('url is : ' + data.url);
-
 					const a = document.createElement('a');
 					a.style.display = 'none';
 					document.body.appendChild(a);
@@ -170,7 +115,6 @@ const Main = ({ metaData, reRender, setReRender }) => {
 
 					// Trigger the download by simulating click
 					a.click();
-					console.log('a clicked');
 
 					// Cleanup
 					window.URL.revokeObjectURL(a.href);
@@ -185,12 +129,13 @@ const Main = ({ metaData, reRender, setReRender }) => {
 		<div className="file">
 			<div className="file-header">
 				<InsertDriveFileIcon />
-				<p className="file-name">{metaData.filename}</p>
-				{/* <a href="https://ratneshjain.blob.core.windows.net/arnav/Sumedh.png?sv=2020-10-02&st=2021-10-17T10%3A08%3A24Z&se=2021-10-17T11%3A13%3A24Z&sr=b&sp=rcw&sig=u0rtC6dSy9Obytm%2BVC03YqaWTAjnJiqL8SxGmxYv8s8%3D" download> */}
+				<p className="file-name" title={metaData.filename}>
+					{metaData.filename}
+				</p>
+
 				<IconButton onClick={handleDownload}>
 					<DownloadIcon />
 				</IconButton>
-				{/* </a> */}
 			</div>
 			<div className="file-info">
 				Created: {metaData.createdate} <br />

@@ -1,8 +1,9 @@
+import { useState } from 'react';
+
 import { makeStyles } from '@material-ui/styles';
 import GroupIcon from '@material-ui/icons/Group';
 import ComputerIcon from '@material-ui/icons/Computer';
 import AddIcon from '@material-ui/icons/Add';
-import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -25,12 +26,15 @@ const SideBar = ({
 	reRender,
 	setReRender,
 }) => {
+	// State Variables
 	const [listActive1, setListActive1] = useState('list-item-active');
 	const [listActive2, setListActive2] = useState('');
 	const [open, setOpen] = useState(false);
 	const [isFileUploaded, setIsFileUploaded] = useState(false);
 	const [metaData, setMetaData] = useState({});
 	const [file, setFile] = useState();
+
+	// Functions
 	// Button Styles
 	const useStyles = makeStyles({
 		btn: {
@@ -41,6 +45,7 @@ const SideBar = ({
 			fontSize: '40px',
 		},
 	});
+
 	const classes = useStyles();
 
 	// Functions
@@ -51,6 +56,7 @@ const SideBar = ({
 	const handleClick = (option) => {
 		setSideBarOption(option);
 	};
+
 	const uploadMetaData = () => {
 		const data = {
 			metadata: {
@@ -61,7 +67,6 @@ const SideBar = ({
 				type: metaData.type,
 			},
 		};
-		console.log('metadata starts');
 		fetch('http://localhost:5000/setMetaData', {
 			method: 'POST',
 			withCredentials: true,
@@ -74,9 +79,6 @@ const SideBar = ({
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
-					console.log('metadata here');
-					console.log('status ' + data.success);
-
 					reRender ? setReRender(0) : setReRender(1);
 					setFile();
 					setMetaData({});
@@ -87,8 +89,6 @@ const SideBar = ({
 	};
 
 	const uploadFile = (url) => {
-		console.log(metaData.type);
-		console.log('put : ' + metaData.fileName);
 		fetch(url, {
 			method: 'PUT',
 			headers: {
@@ -99,7 +99,6 @@ const SideBar = ({
 			body: file,
 		})
 			.then((res) => {
-				console.log('PUT url is : ' + url);
 				uploadMetaData(metaData);
 			})
 			.catch((err) => console.log(err));
@@ -109,8 +108,6 @@ const SideBar = ({
 		const data = {
 			filename: metaData.fileName,
 		};
-
-		console.log('post : ' + metaData.fileName);
 
 		fetch('http://localhost:5000/getSASUrl', {
 			method: 'POST',
@@ -123,9 +120,7 @@ const SideBar = ({
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log('Yay!', data);
 				if (data.success) {
-					console.log('url is : ' + data.url);
 					uploadFile(data.url);
 				}
 			})
@@ -187,7 +182,11 @@ const SideBar = ({
 										lastModified: new Date(
 											e.target.files[0].lastModified
 										).toDateString(),
-										fileSize: e.target.files[0].size * Math.pow(10, -6),
+										fileSize: (
+											Math.round(
+												e.target.files[0].size * Math.pow(10, -6) * 100
+											) / 100
+										).toFixed(3),
 										type: e.target.files[0].type,
 									});
 

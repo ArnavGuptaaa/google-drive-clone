@@ -5,29 +5,32 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 const Login = () => {
+	// useEffect
 	useEffect(() => {
 		document.title = 'Login - Drive Clone';
 	}, []);
 
+	// state Variables
+	const [name, setName] = useState('');
+	const [password, setPassword] = useState('');
+	const [isValidated, setIsValidated] = useState(false);
+	const [isClicked, setIsclicked] = useState(false);
+
+	// Instatiate
+	const history = useHistory();
+
+	// Functions
 	const useStyles = makeStyles((theme) => ({
 		margin: {
 			margin: theme.spacing(1),
 		},
 	}));
-
 	const classes = useStyles();
-
-	// Form validation
-	const [name, setName] = useState('');
-	const [password, setPassword] = useState('');
-	const [isValidated, setIsValidated] = useState(false);
-	const [isClicked, setIsclicked] = useState(false);
-	const history = useHistory();
 
 	const validateCreds = (e) => {
 		e.preventDefault();
 
-		// username regex
+		// Username regex
 		const nameRegex = /^[a-z ,.'-]+$/i;
 
 		// Password Regex
@@ -36,20 +39,16 @@ const Login = () => {
 
 		if (nameRegex.test(name) && passwordRegex.test(password)) {
 			setIsValidated(true);
-			console.log('setIsValidated Is Now ' + isValidated);
+
 			// Posting to the API
 			e.preventDefault();
 			postLogin(name, password);
-			console.log('After ' + isValidated);
 		} else {
 			setIsValidated(false);
 		}
 		setIsclicked(true);
-
-		console.log(name, password);
 	};
 
-	// POST REQUEST
 	const postLogin = (name, password) => {
 		const data = {
 			username: name,
@@ -66,13 +65,10 @@ const Login = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
 				if (data.success) {
-					console.log('redirect to dashboard');
 					history.push('/');
 				} else {
 					setIsValidated(false);
-					console.log('Hello');
 				}
 			})
 			.catch((err) => console.log(err));
@@ -104,7 +100,6 @@ const Login = () => {
 					variant="outlined"
 					onChange={(e) => {
 						setName(e.target.value);
-						console.log(name);
 					}}
 				/>
 				<TextField
@@ -123,7 +118,6 @@ const Login = () => {
 					variant="outlined"
 					onChange={(e) => {
 						setPassword(e.target.value);
-						console.log(password);
 					}}
 				/>
 

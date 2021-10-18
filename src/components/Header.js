@@ -26,8 +26,6 @@ function Header({ userName, setIsLoggedIn }) {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
-
 				if (data.success) {
 					history.push('/login');
 				}

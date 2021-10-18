@@ -13,21 +13,6 @@ body {
 	color: #5f6368;
 }
 
-/* ScrollBar */
-html::-webkit-scrollbar {
-	width: 10px;
-}
-
-html::-webkit-scrollbar-track {
-	background: rgb(0, 0, 0, 0);
-	border-radius: 10px;
-}
-
-html::-webkit-scrollbar-thumb {
-	background: #b3b3b3;
-	border-radius: 15px;
-}
-
 .header {
 	height: 10vh;
 	padding: 1%;
@@ -35,8 +20,6 @@ html::-webkit-scrollbar-thumb {
 	justify-content: space-between;
 	align-items: center;
 	border-bottom: 1px solid #c0c0c0;
-	/* box-shadow: 0 8px 36px rgba(0, 0, 0, 0.1); */
-	/* border: 1px solid black; */
 }
 
 .logo {
@@ -62,7 +45,6 @@ html::-webkit-scrollbar-thumb {
 .sidebar {
 	height: 90vh;
 	flex: 0.17;
-	/* border-right: 1px solid black; */
 	background: #f4f2f2;
 	border-right: 1px solid #c0c0c0;
 }
@@ -76,7 +58,6 @@ html::-webkit-scrollbar-thumb {
 	margin: 20px 10px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	padding: 10px;
-	/* border: 1px solid black; */
 	border-radius: 25px;
 	width: 60%;
 	font-size: 1.1rem;
@@ -124,10 +105,7 @@ html::-webkit-scrollbar-thumb {
 	flex-wrap: wrap;
 }
 
-/* Login */
-
 .login-container {
-	/* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1133%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(48%2c 48%2c 48%2c 1)'%3e%3c/rect%3e%3cpath d='M1536 560L0 560 L0 386.65Q32.88 347.52%2c 72 380.4Q119.28 355.68%2c 144 402.96Q209.56 348.52%2c 264 414.08Q302.63 332.71%2c 384 371.34Q434.69 350.03%2c 456 400.72Q467.84 340.56%2c 528 352.4Q603.31 307.71%2c 648 383.02Q698.71 313.73%2c 768 364.43Q826.02 350.45%2c 840 408.47Q892.17 340.64%2c 960 392.82Q999.44 312.25%2c 1080 351.69Q1122.9 322.59%2c 1152 365.49Q1211.76 353.25%2c 1224 413.02Q1277.88 346.9%2c 1344 400.79Q1371.31 356.1%2c 1416 383.41Q1458.57 305.98%2c 1536 348.55z' fill='rgba(73%2c 73%2c 73%2c 1)'%3e%3c/path%3e%3cpath d='M1488 560L0 560 L0 441.04Q59.23 380.27%2c 120 439.51Q135.83 383.34%2c 192 399.16Q233.66 368.82%2c 264 410.47Q353.53 380%2c 384 469.54Q398.51 412.05%2c 456 426.56Q486.43 384.99%2c 528 415.41Q600.04 367.45%2c 648 439.48Q694.33 413.81%2c 720 460.15Q751.12 371.27%2c 840 402.39Q909.44 351.83%2c 960 421.28Q1018.74 408.01%2c 1032 466.75Q1057.13 419.88%2c 1104 445.01Q1156.61 377.62%2c 1224 430.23Q1278.55 412.77%2c 1296 467.32Q1322.29 373.61%2c 1416 399.9Q1463.04 374.94%2c 1488 421.98z' fill='rgba(147%2c 147%2c 147%2c 1)'%3e%3c/path%3e%3cpath d='M1488 560L0 560 L0 507.01Q32.5 419.51%2c 120 452.01Q167.8 427.81%2c 192 475.61Q271.05 434.66%2c 312 513.71Q336.12 465.83%2c 384 489.94Q426.37 412.31%2c 504 454.68Q562.76 441.44%2c 576 500.2Q618.26 470.46%2c 648 512.72Q679.13 423.86%2c 768 454.99Q811.41 426.4%2c 840 469.82Q919.02 428.84%2c 960 507.86Q984.53 460.39%2c 1032 484.92Q1080.06 412.98%2c 1152 461.04Q1214.87 451.91%2c 1224 514.78Q1277.05 447.82%2c 1344 500.87Q1368.54 453.41%2c 1416 477.95Q1445.63 435.58%2c 1488 465.21z' fill='rgba(196%2c 196%2c 196%2c 1)'%3e%3c/path%3e%3cpath d='M1536 560L0 560 L0 565.58Q47.83 493.41%2c 120 541.24Q199.21 500.45%2c 240 579.66Q286.91 506.57%2c 360 553.48Q401.6 523.08%2c 432 564.67Q498.52 511.19%2c 552 577.71Q573.26 526.98%2c 624 548.24Q667.88 472.13%2c 744 516.01Q825.39 477.4%2c 864 558.8Q905.21 528.01%2c 936 569.22Q961.36 522.58%2c 1008 547.94Q1038.28 506.22%2c 1080 536.5Q1104.01 488.51%2c 1152 512.52Q1194.13 482.65%2c 1224 524.79Q1268.38 497.16%2c 1296 541.54Q1361.92 487.46%2c 1416 553.38Q1455.53 472.91%2c 1536 512.45z' fill='white'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1133'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e"); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100vh;
@@ -152,21 +130,14 @@ html::-webkit-scrollbar-thumb {
 .form-title {
 	font-size: 2rem;
 }
+
 .login-form {
 	background-color: #fff;
-
 	width: 28%;
-
-	/* border-radius: 30px;
-
-	box-shadow: 20px 20px 360px #bebebe, -20px -20px 60px #ffffff; */
-
 	border-radius: 40px;
 	box-shadow: 24px 24px 145px #bbbbbb, -24px -24px 45px #ffffff;
-
 	min-width: 300px;
 	height: 70%;
-	/* border: 1px solid #b3b3b3; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -181,9 +152,11 @@ html::-webkit-scrollbar-thumb {
 	justify-content: center;
 	align-items: center;
 }
+
 .links-div a {
 	margin: 5px;
 }
+
 .forgot-password {
 	font-size: 0.8rem;
 	color: #303f9f;
@@ -191,17 +164,11 @@ html::-webkit-scrollbar-thumb {
 
 .file {
 	cursor: pointer;
-	/* width: 10%; */
 	margin: 10px;
 	min-width: 150px;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
-	/* align-items: center; */
-	/* justify-content: center; */
-	/* font-size: 1.1rem; */
-	/* padding: 20px; */
-	/* background: #f2f4f5; */
 	border-radius: 10px;
 	border: 0.5px solid #c0c0c0;
 }
@@ -210,6 +177,7 @@ html::-webkit-scrollbar-thumb {
 	display: flex;
 	font-size: 1.3rem;
 	font-weight: bold;
+	width: 100%;
 }
 
 .file-info {
@@ -222,8 +190,10 @@ html::-webkit-scrollbar-thumb {
 }
 
 .file-name {
-	/* flex: 0.8; */
+	/* flex: 0.2; */
 	margin-left: 5px;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
 }
 
 .file-footer {
@@ -277,6 +247,7 @@ html::-webkit-scrollbar-thumb {
 	align-items: center;
 	font-size: 1.2rem;
 }
+
 .metaData {
 	display: flex;
 	flex-direction: column;
@@ -293,6 +264,7 @@ html::-webkit-scrollbar-thumb {
 .not-uploaded {
 	border: 1px dashed #5e636e;
 }
+
 .upload-button {
 	text-align: center;
 }
