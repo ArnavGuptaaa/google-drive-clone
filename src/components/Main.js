@@ -28,6 +28,8 @@ const Main = ({ sideBarOption, reRender, setReRender }) => {
 				if (data.success) {
 					if (data.blob_list.length > 0) {
 						setFiles(data.blob_list);
+					} else {
+						setFiles();
 					}
 				}
 			});

@@ -5,19 +5,35 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 const Login = () => {
+	const history = useHistory();
+
 	// useEffect
 	useEffect(() => {
 		document.title = 'Login - Drive Clone';
-	}, []);
+
+		// get request with fetch
+		fetch('http://localhost:5000/is-logged', {
+			method: 'GET',
+			withCredentials: true,
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success) {
+					history.push('/');
+				}
+			})
+			.catch((err) => console.log(err));
+	}, [history]);
 
 	// state Variables
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [isValidated, setIsValidated] = useState(false);
 	const [isClicked, setIsclicked] = useState(false);
-
-	// Instatiate
-	const history = useHistory();
 
 	// Functions
 	const useStyles = makeStyles((theme) => ({
@@ -89,7 +105,7 @@ const Login = () => {
 					id="outlined-full-width login-email"
 					label="Username"
 					style={{ margin: 8 }}
-					{...(!isValidated && isClicked ? { error: 'true' } : {})}
+					{...(!isValidated && isClicked ? { error: true } : {})}
 					placeholder="Username"
 					fullWidth
 					margin="normal"
@@ -107,7 +123,7 @@ const Login = () => {
 					type="password"
 					label="Password"
 					style={{ margin: 8 }}
-					{...(!isValidated && isClicked ? { error: 'true' } : {})}
+					{...(!isValidated && isClicked ? { error: true } : {})}
 					placeholder="Password"
 					fullWidth
 					margin="normal"
