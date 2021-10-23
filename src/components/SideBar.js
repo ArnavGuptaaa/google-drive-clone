@@ -88,40 +88,21 @@ const SideBar = ({
 			.catch((err) => console.log(err));
 	};
 
-	const uploadFile = (url) => {
-		fetch(url, {
-			method: 'PUT',
-			headers: {
-				'x-ms-blob-type': 'BlockBlob',
-				'Content-Type': metaData.type,
-				redirect: 'follow',
-			},
-			body: file,
-		})
-			.then((res) => {
-				uploadMetaData(metaData);
-			})
-			.catch((err) => console.log(err));
-	};
-
 	const handleUpload = (e) => {
-		const data = {
-			filename: metaData.fileName,
-		};
+		var data = new FormData()
+		data.append('newFile', file)
+		data.append('filename', metaData.fileName)
 
-		fetch('http://localhost:5000/getSASUrl', {
+		fetch('http://localhost:5000/uploadFile', {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
+			body: data,
 		})
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
-					uploadFile(data.url);
+					uploadMetaData(metaData);
 				}
 			})
 			.catch((err) => console.log(err));
@@ -149,7 +130,7 @@ const SideBar = ({
 							<p>Created : {metaData.createDate}</p>
 							<p>Last modified : {metaData.lastModified}</p>
 							<p>size : {metaData.fileSize} MB</p>
-							{}
+							{ }
 						</div>
 					) : (
 						<div className="metaData not-uploaded">
