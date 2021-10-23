@@ -37,7 +37,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 		};
 
 		fetch('http://localhost:5000/deleteBlob', {
-			method: 'POST',
+			method: 'DELETE',
 			withCredentials: true,
 			credentials: 'include',
 			headers: {
@@ -67,7 +67,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			},
 		};
 		fetch('http://localhost:5000/renameBlob', {
-			method: 'POST',
+			method: 'PATCH',
 			withCredentials: true,
 			credentials: 'include',
 			headers: {
