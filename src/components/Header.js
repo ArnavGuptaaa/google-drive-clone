@@ -16,7 +16,7 @@ function Header({ userName, setIsLoggedIn }) {
 
 	const handleLogout = () => {
 		// Logout Post Request
-		fetch('http://localhost:5000/logout', {
+		fetch(`${process.env.IP}/logout`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

@@ -67,7 +67,7 @@ const SideBar = ({
 				type: metaData.type,
 			},
 		};
-		fetch('http://localhost:5000/setMetaData', {
+		fetch(`${process.env.IP}/setMetaData`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',
@@ -93,7 +93,7 @@ const SideBar = ({
 		data.append('newFile', file)
 		data.append('filename', metaData.fileName)
 
-		fetch('http://localhost:5000/uploadFile', {
+		fetch(`${process.env.IP}/uploadFile`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

@@ -15,7 +15,7 @@ const Main = ({ sideBarOption, reRender, setReRender }) => {
 
 	// Functions
 	const getFiles = () => {
-		fetch('http://localhost:5000/listBlobs', {
+		fetch(`${process.env.IP}/listBlobs`, {
 			method: 'GET',
 			withCredentials: true,
 			credentials: 'include',

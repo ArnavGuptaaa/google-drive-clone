@@ -12,7 +12,7 @@ const Login = () => {
 		document.title = 'Login - Drive Clone';
 
 		// get request with fetch
-		fetch('http://localhost:5000/is-logged', {
+		fetch(`${process.env.IP}/is-logged`, {
 			method: 'GET',
 			withCredentials: true,
 			credentials: 'include',
@@ -70,7 +70,7 @@ const Login = () => {
 			username: name,
 			password: password,
 		};
-		fetch('http://localhost:5000/login', {
+		fetch(`${process.env.IP}/login`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

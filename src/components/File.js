@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+require('dotenv').config()
+
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -36,7 +38,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			filename: metaData.filename,
 		};
 
-		fetch('http://localhost:5000/deleteBlob', {
+		fetch(`${process.env.IP}/deleteBlob`, {
 			method: 'DELETE',
 			withCredentials: true,
 			credentials: 'include',
@@ -66,7 +68,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 				type: metaData.type,
 			},
 		};
-		fetch('http://localhost:5000/renameBlob', {
+		fetch(`${process.env.IP}/renameBlob`, {
 			method: 'PATCH',
 			withCredentials: true,
 			credentials: 'include',
@@ -91,7 +93,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			filename: metaData.filename,
 		};
 
-		fetch('http://localhost:5000/getSASUrl', {
+		fetch(`${process.env.IP}/getSASUrl`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

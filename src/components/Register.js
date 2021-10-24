@@ -57,7 +57,7 @@ const Register = () => {
 			email: email,
 			password: password,
 		};
-		fetch('http://localhost:5000/register', {
+		fetch(`${process.env.IP}/register`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

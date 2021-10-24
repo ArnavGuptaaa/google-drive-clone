@@ -13,7 +13,7 @@ const Dashboard = () => {
 		document.title = 'Drive Clone';
 
 		// get request with fetch
-		fetch('http://localhost:5000/is-logged', {
+		fetch(`${process.env.IP}/is-logged`, {
 			method: 'GET',
 			withCredentials: true,
 			credentials: 'include',
