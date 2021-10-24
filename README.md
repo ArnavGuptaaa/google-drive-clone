@@ -26,6 +26,27 @@
 
 ## 📌Screenshots
 
+### Register Page
+<img src="https://drive.google.com/uc?export=download&id=15jVIxctzfWK-RTyaKewGxzCwAC_vNcCQ">
+
+### Login Page
+<img src="https://drive.google.com/uc?export=download&id=1ICmczlBRjcEY0mgI_4Hqg_dMhJOm55h3">
+
+### Dashboard
+<img src="https://drive.google.com/uc?export=download&id=1SUsuzCR4sVAPG66ukYVd4nEqgc9rmBSg">
+
+### Upload 
+<img src="https://drive.google.com/uc?export=download&id=1RVu4qobLfXwt_qBeHgGEmiBmiHftBKB8">
+<img src="https://drive.google.com/uc?export=download&id=1Xp6YSBpv-wvYS3WFgfXZ4dES-Alf0UKW">
+<img src="https://drive.google.com/uc?export=download&id=1XrGMTayK4Qf3RTFDDoK4a3b3yWsFYOwy">
+
+### Rename
+<img src="https://drive.google.com/uc?export=download&id=1_Agz_EJ6Em7RlUtZzw3n2EZetmZyDolz">
+<img src="https://drive.google.com/uc?export=download&id=1ewgc1QvYvTXx5LPfFGrxcN2q0fIyKfEo">
+
+### Download
+<img src="https://drive.google.com/uc?export=download&id=1x7D7Aatso8BrdnPTMwF-UULTGEsrPi-7">
+
 <br />
 
 ## 📌How To Use
