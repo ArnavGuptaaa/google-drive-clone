@@ -4,7 +4,7 @@ export const DevTeam = [
 		name: 'Arnav Gupta',
 		imgUrl: 'https://avatars.githubusercontent.com/u/67139196?v=4',
 		githubUrl: 'https://github.com/ArnavGuptaaa',
-		linkedInUrl: 'https://www.linkedin.com/in/arnav-gupta-143534209/',
+		linkedInUrl: 'https://www.linkedin.com/in/arnavguptaa/',
 	},
 	{
 		id: 1,
