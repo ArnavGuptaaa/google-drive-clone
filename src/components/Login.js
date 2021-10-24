@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
+require('dotenv').config();
+
 const Login = () => {
 	const history = useHistory();
 
@@ -12,7 +14,7 @@ const Login = () => {
 		document.title = 'Login - Drive Clone';
 
 		// get request with fetch
-		fetch(`${process.env.IP}/is-logged`, {
+		fetch(`${process.env.REACT_APP_IP}/is-logged`, {
 			method: 'GET',
 			withCredentials: true,
 			credentials: 'include',
@@ -70,7 +72,7 @@ const Login = () => {
 			username: name,
 			password: password,
 		};
-		fetch(`${process.env.IP}/login`, {
+		fetch(`${process.env.REACT_APP_IP}/login`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

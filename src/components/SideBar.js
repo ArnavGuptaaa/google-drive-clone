@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
+require('dotenv').config();
+
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -67,7 +69,7 @@ const SideBar = ({
 				type: metaData.type,
 			},
 		};
-		fetch(`${process.env.IP}/setMetaData`, {
+		fetch(`${process.env.REACT_APP_IP}/setMetaData`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',
@@ -93,7 +95,7 @@ const SideBar = ({
 		data.append('newFile', file)
 		data.append('filename', metaData.fileName)
 
-		fetch(`${process.env.IP}/uploadFile`, {
+		fetch(`${process.env.REACT_APP_IP}/uploadFile`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

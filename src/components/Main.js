@@ -4,6 +4,8 @@ import File from './File';
 import DevCard from './DevCard';
 import { DevTeam } from './DevTeam';
 
+require('dotenv').config();
+
 const Main = ({ sideBarOption, reRender, setReRender }) => {
 	// UseEffect
 	useEffect(() => {
@@ -15,7 +17,7 @@ const Main = ({ sideBarOption, reRender, setReRender }) => {
 
 	// Functions
 	const getFiles = () => {
-		fetch(`${process.env.IP}/listBlobs`, {
+		fetch(`${process.env.REACT_APP_IP}/listBlobs`, {
 			method: 'GET',
 			withCredentials: true,
 			credentials: 'include',

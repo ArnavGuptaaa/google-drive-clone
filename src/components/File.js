@@ -38,7 +38,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			filename: metaData.filename,
 		};
 
-		fetch(`${process.env.IP}/deleteBlob`, {
+		fetch(`${process.env.REACT_APP_IP}/deleteBlob`, {
 			method: 'DELETE',
 			withCredentials: true,
 			credentials: 'include',
@@ -68,7 +68,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 				type: metaData.type,
 			},
 		};
-		fetch(`${process.env.IP}/renameBlob`, {
+		fetch(`${process.env.REACT_APP_IP}/renameBlob`, {
 			method: 'PATCH',
 			withCredentials: true,
 			credentials: 'include',
@@ -93,7 +93,7 @@ const Main = ({ metaData, reRender, setReRender }) => {
 			filename: metaData.filename,
 		};
 
-		fetch(`${process.env.IP}/getSASUrl`, {
+		fetch(`${process.env.REACT_APP_IP}/getSASUrl`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

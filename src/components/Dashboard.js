@@ -4,16 +4,21 @@ import Main from './Main';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
+require('dotenv').config();
+
 const Dashboard = () => {
 	// USE HSTORY
 	const history = useHistory();
 
+	console.log(process.env.REACT_APP_IP);
+
 	// API GET Request for is-logged
 	useEffect(() => {
 		document.title = 'Drive Clone';
-
+		let url =
+		process.env.REACT_APP_IP + "/is-logged";
 		// get request with fetch
-		fetch(`${process.env.IP}/is-logged`, {
+		fetch(url, {
 			method: 'GET',
 			withCredentials: true,
 			credentials: 'include',

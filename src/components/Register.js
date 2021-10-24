@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
+require('dotenv').config();
+
 const Register = () => {
 	// useeffect
 	useEffect(() => {
@@ -57,7 +59,7 @@ const Register = () => {
 			email: email,
 			password: password,
 		};
-		fetch(`${process.env.IP}/register`, {
+		fetch(`${process.env.REACT_APP_IP}/register`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',

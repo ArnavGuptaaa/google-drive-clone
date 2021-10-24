@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 
+require('dotenv').config();
+
 function Header({ userName, setIsLoggedIn }) {
 	const useStyles = makeStyles((theme) => ({
 		margin: {
@@ -16,7 +18,7 @@ function Header({ userName, setIsLoggedIn }) {
 
 	const handleLogout = () => {
 		// Logout Post Request
-		fetch(`${process.env.IP}/logout`, {
+		fetch(`${process.env.REACT_APP_IP}/logout`, {
 			method: 'POST',
 			withCredentials: true,
 			credentials: 'include',
