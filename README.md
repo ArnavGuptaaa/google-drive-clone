@@ -13,7 +13,7 @@
     A google drive clone built by
     <a href="https://github.com/ArnavGuptaaa/">@ArnavGuptaaa</a>,
     <a href="https://github.com/sumedhdixit/">@sumedhdixit</a> and
-    <a href="https://github.com/@ratneshjain40/">@ratneshjain40</a>
+    <a href="https://github.com/ratneshjain40/">@ratneshjain40</a>
 </h4>
 
 ---
